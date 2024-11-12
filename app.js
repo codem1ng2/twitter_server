@@ -8,8 +8,7 @@ app.use(express.json())
 
 app.use('/tweets', tweetsRouter)
 app.use('/auth', authRouter)
-
-app.use((req,res,next) =>{
+app.use((req, res, next) => {
     res.sendStatus(404)
 })
 
