@@ -1,5 +1,3 @@
-import exp from "constants"
-
 let users = [
     {
         id: '1',
@@ -25,8 +23,9 @@ let users = [
 ]
 export async function createUser(username, password, name, email) {
     const user = {
-        id: '3',
+        id: '4',
         username: username,
+        password: password,
         name: name,
         email: email,
         url: 'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'

@@ -1,7 +1,7 @@
 import * as tweetRepository from '../data/tweet.js'
 
 // 모든 트윗을 가져오는 함수
-export async function getTweets(req, res) {
+export async function getTweets(req, res, next) {
     const username = req.query.username
     const data = await (username ? tweetRepository.getAllByUsername(username) : tweetRepository.getAll())
     res.status(200).json(data)
@@ -26,8 +26,8 @@ export async function createTweet(req, res, next) {
 }
 
 // 트윗을 변경하는 함수
-export async function updateTweet(req, res, next) {
-    const id = params.id
+export async function updateTweet(req, res) {
+    const id = rep.params.id
     const text = req.body.text
     const tweet = await tweetRepository.update(id, text)
     if (tweet) {
