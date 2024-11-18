@@ -1,47 +1,16 @@
-let users = [
-    {
-        id: '1',
-        username: 'apple',
-        password: '1111',
-        name: '김사과',
-        email: 'apple@apple.com',
-        url: 'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'
-    },
-    {
-        id: '2',
-        username: 'banana',
-        password: '2222',
-        name: '반하나',
-        email: 'banana@banana.com',
-        url: 'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'
-    },
-    {
-        id: '3',
-        username: 'orange',
-        password: '3333',
-        name: '오렌지',
-        email: 'orange@orange.com',
-        url: 'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'
-    }
-]
-export async function createUser(username, password, name, email) {
-    const user = {
-        id: '4',
-        username,
-        password,
-        name,
-        email,
-        url: 'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'
-    }
-    users = [user, ...users]
-    return user
+import { db } from '../db/database.js'
+export async function createUser(user) {
+    const { username, password, name, email, url } = user
+    return db.execute('INSERT INTO users (username, password, name, email, url) VALUES (?,?,?,?,?)',
+        [username, password, name, email, url]
+    ).then((result) => result[0].insertId)
 }
 
 export async function findByUsername(username) {
-    const user = users.find((user) => user.username === username)
-    return user
+    return db.execute('SELECT * FROM users WHERE username=?', [username])
+        .then((result) => result[0][0])
 }
 
 export async function findById(id) {
-    return users.find((user) => user.id === id)
+    return db.execute('SELECT * FROM users WHERE id=?', [id]).then((result) => result[0][0])
 }

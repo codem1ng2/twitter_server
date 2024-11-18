@@ -6,11 +6,13 @@ import { config } from '../config.js'
 
 
 async function createJwtToken(id) {
-    return jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec })
+    const token = jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec })
+    return token
 }
 
+// signup
 export async function signup(req, res, next) {
-    const { username, password, name, email } = req.body
+    const { username, password, name, email, url } = req.body
     // 회원 중복 체크
     const found = await authRepository.findByUsername(username)
     if (found) {
@@ -18,12 +20,18 @@ export async function signup(req, res, next) {
     }
     // const users = await authRepository.createUser(username, password, name, email)
     const hashed = bcrypt.hashSync(password, config.bcrypt.saltRounds)
-    const users = await authRepository.createUser(username, hashed, name, email)
+    const users = await authRepository.createUser({
+        username,
+        password: hashed,
+        name,
+        email,
+        url
+    })
     const token = await createJwtToken(users.id)
     // console.log(token)
     res.status(201).json({ token, username })
 }
-
+// login
 export async function login(req, res, next) {
     const { username, password } = req.body
     const user = await authRepository.findByUsername(username)

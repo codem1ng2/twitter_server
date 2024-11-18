@@ -3,6 +3,7 @@ import * as tweetController from '../controller/tweet.js'
 import { body } from 'express-validator'
 import { validate } from '../middleware/validator.js'
 import { isAuth } from '../middleware/auth.js'
+import { db } from '../db/database.js'
 
 const router = express.Router()
 
