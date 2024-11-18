@@ -52,8 +52,7 @@ export async function deleteTweet(req, res, next) {
     if (tweet.userId !== req.userId) {
         return res.sendStatus(403)
     }
-    const updated = await tweetRepository.update(id, text)
-    res.status(200).json(updated)
+
     await tweetRepository.remove(id)
     res.sendStatus(204)
 }

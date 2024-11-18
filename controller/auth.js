@@ -34,7 +34,7 @@ export async function signup(req, res, next) {
 // login
 export async function login(req, res, next) {
     const { username, password } = req.body
-    const user = await authRepository.findByUsername(username)
+    const user = await authRepository.findByUserName(username)
     if (!user) {
         return res.status(401).json(`${username} 아이디를 찾을 수 없음`)
     }
