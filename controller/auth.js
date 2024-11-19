@@ -3,8 +3,6 @@ import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { config } from '../config.js'
 
-
-
 async function createJwtToken(id) {
     const token = jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec })
     return token
@@ -34,7 +32,7 @@ export async function signup(req, res, next) {
 // login
 export async function login(req, res, next) {
     const { username, password } = req.body
-    const user = await authRepository.findByUserName(username)
+    const user = await authRepository.findByUsername(username)
     if (!user) {
         return res.status(401).json(`${username} 아이디를 찾을 수 없음`)
     }
